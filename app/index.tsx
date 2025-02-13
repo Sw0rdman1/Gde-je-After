@@ -1,11 +1,17 @@
-import { Text, View } from '@/components/Themed'
 import { StyleSheet } from 'react-native'
+import MapView from 'react-native-maps'
 
 const MainScreen = () => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>MainScreen</Text>
-        </View>
+        <MapView
+            style={styles.container}
+            initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            }}
+        />
     )
 }
 
@@ -14,11 +20,5 @@ export default MainScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
     },
 })
