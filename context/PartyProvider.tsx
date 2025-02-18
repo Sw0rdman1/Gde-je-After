@@ -1,3 +1,4 @@
+import PartyLoader from '@/components/Map/PartyLoader';
 import Party from '@/models/Party';
 import { mockParties } from '@/utils/mock';
 import { ProviderProps } from '@/utils/types';
@@ -9,7 +10,7 @@ interface PartyContextProps {
     setSelectedParty: (party: Party | null) => void;
 }
 
-export const PartyContext = createContext<PartyContextProps | undefined>(undefined);
+const PartyContext = createContext<PartyContextProps | null>(null);
 
 
 export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
@@ -17,7 +18,7 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedParty, setSelectedParty] = useState<Party | null>(null);
 
-    const fetchParties = async () => {
+    const fetchParties = () => {
         // Fetch parties from API
         setTimeout(() => {
             setParties(mockParties)
@@ -31,6 +32,7 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
 
     return (
         <PartyContext.Provider value={{ parties, selectedParty, setSelectedParty }}>
+            {loading && <PartyLoader />}
             {children}
         </PartyContext.Provider>
     );

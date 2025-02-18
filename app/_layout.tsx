@@ -1,4 +1,5 @@
 import { LocationProvider } from '@/context/LocationProvider';
+import { PartyProvider } from '@/context/PartyProvider';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -48,11 +49,12 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <LocationProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-        </Stack>
+        <PartyProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+          </Stack>
+        </PartyProvider>
       </LocationProvider>
-    </ThemeProvider>
-
+    </ThemeProvider >
   );
 }
