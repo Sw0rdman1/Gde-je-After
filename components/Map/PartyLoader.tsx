@@ -5,7 +5,6 @@ const PartyLoader = () => {
     return (
         <View style={styles.container}>
             <ActivityIndicator size="large" color="#fff" />
-
         </View>
     )
 }
