@@ -2,8 +2,6 @@ import { useLocation } from '@/context/LocationProvider'
 import { StyleSheet } from 'react-native'
 import MapView from 'react-native-maps'
 
-
-
 const MainScreen = () => {
     const { currentLocation, loading } = useLocation()
 

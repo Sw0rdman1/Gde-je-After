@@ -5,8 +5,9 @@ import { Region } from 'react-native-maps';
 import { Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get("window");
+
 const ASPECT_RATIO = width / height;
-const LATITUDE_DELTA = 0.0722;
+const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 interface LocationContextType {
@@ -30,6 +31,7 @@ export const LocationProvider: React.FC<ProviderProps> = ({ children }) => {
                 setErrorMsg('Permission to access location was denied');
                 return;
             }
+
             let location = await Location.getCurrentPositionAsync({});
             setCurrentLocation({
                 latitude: location.coords.latitude,
@@ -37,6 +39,7 @@ export const LocationProvider: React.FC<ProviderProps> = ({ children }) => {
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA,
             });
+
             setLoading(false);
         }
         getCurrentLocation();
