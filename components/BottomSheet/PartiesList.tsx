@@ -18,6 +18,7 @@ const PartiesList = () => {
             data={parties}
             keyExtractor={(party) => party.id}
             renderItem={renderItem}
+            style={{ backgroundColor: 'whitesmoke', paddingVertical: 8 }}
         />
     )
 }
