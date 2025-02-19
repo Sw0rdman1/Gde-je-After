@@ -16,6 +16,21 @@ export const mockVenueFlagAndSparrow: Venue = {
     phone: '011/123-4567'
 }
 
+export const mockVenueKST: Venue = {
+    id: '2',
+    name: 'KST',
+    logo: 'https://www.studentskizivot.com/wp-content/uploads/2014/10/KST-LOGO.jpg',
+    location: {
+        latitude: 44.805509,
+        longitude: 20.476108,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01
+    },
+    address: 'Braće Jugovića 18, Beograd',
+    description: 'KST je jedno od najpoznatijih mesta za žurke u Beogradu. Nalazi se u centru grada, u Braće Jugovića 18. Ovaj klub je poznat po svojim žurkama, kao i po odličnoj atmosferi.',
+    phone: '011/765-4321'
+}
+
 export const mockParties: Party[] = [
     {
         id: '1',
@@ -23,5 +38,12 @@ export const mockParties: Party[] = [
         description: 'Ovo je opis prve žurke',
         name: 'Žurka 1',
         venue: mockVenueFlagAndSparrow
+    },
+    {
+        id: '2',
+        date: '2021-09-02',
+        description: 'Ovo je opis druge žurke',
+        name: 'Žurka 2',
+        venue: mockVenueKST
     }
 ]
