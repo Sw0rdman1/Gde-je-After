@@ -31,9 +31,8 @@ export default SearchBar
 const styles = StyleSheet.create({
     container: {
         maxWidth: '100%',
-        backgroundColor: 'white',
-        paddingBottom: 20,
         gap: 15,
+        padding: 16,
     },
     title: {
         fontSize: 24,
@@ -43,10 +42,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'whitesmoke',
-        borderRadius: 10,
+        borderRadius: 25,
         padding: 10,
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2,
     },
     icon: {
+        marginLeft: 5,
         marginRight: 10,
     },
     input: {

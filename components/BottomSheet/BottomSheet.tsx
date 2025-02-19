@@ -2,8 +2,10 @@ import { useMemo, useRef } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import SearchBar from './SearchBar';
+import PartiesList from './PartiesList';
+import { View } from '../Themed';
 
-const SNAP_POINTS = ['30%', '50%', '80%'];
+const SNAP_POINTS = ['20%', '30%', '50%', '80%'];
 
 const AppBottomSheet = () => {
     const bottomSheetRef = useRef<BottomSheet>(null);
@@ -15,12 +17,13 @@ const AppBottomSheet = () => {
             ref={bottomSheetRef}
             enableDynamicSizing={false}
             snapPoints={snapPoints}
-            index={0}
+            index={1}
             keyboardBehavior="extend"
         >
-            <BottomSheetView style={styles.contentContainer}>
+            <View style={styles.contentContainer}>
                 <SearchBar />
-            </BottomSheetView>
+                <PartiesList />
+            </View>
         </BottomSheet>
     )
 }
@@ -30,6 +33,5 @@ export default AppBottomSheet
 const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
-        padding: 16,
     },
 })

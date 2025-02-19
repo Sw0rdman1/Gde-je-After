@@ -8,7 +8,8 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
-    marker: '#E74C3C',
+    // marker: '#E74C3C',
+    marker: '#2f95dc',
   },
   dark: {
     text: '#fff',
