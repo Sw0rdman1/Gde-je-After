@@ -2,7 +2,7 @@ import { Callout, MapMarker, Marker } from 'react-native-maps'
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Party from '@/models/Party';
 import { BlurView } from 'expo-blur';
-import Svg, { Path, Defs, ClipPath, Circle, Mask } from "react-native-svg";
+import Svg, { Path, Defs, Circle, Mask } from "react-native-svg";
 import { useColors } from '@/hooks/useColors';
 import { useEffect, useRef, useState } from 'react';
 import { calculateTextWidth } from '@/utils/calculate';
