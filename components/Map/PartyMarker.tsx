@@ -1,10 +1,13 @@
-import { Callout, Marker } from 'react-native-maps'
+import { Callout, MapMarker, Marker } from 'react-native-maps'
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Party from '@/models/Party';
 import { BlurView } from 'expo-blur';
 import Svg, { Path, Defs, ClipPath, Circle } from "react-native-svg";
+import { useColors } from '@/hooks/useColors';
+import { useEffect, useRef, useState } from 'react';
+import { calculateTextWidth } from '@/utils/calculate';
+import { useParty } from '@/context/PartyProvider';
 
-const SVG_MARKER_COLOR = "#27667B"
 const SVG_MARKER_WIDTH = 50
 const SVG_MARKER_HEIGHT = 60
 const MARKER_IMAGE_SIZE = 35
@@ -12,15 +15,21 @@ const MARKER_IMAGE_SIZE = 35
 const TOP_OFFSET = (SVG_MARKER_HEIGHT - MARKER_IMAGE_SIZE) / 5
 const LEFT_OFFSET = (SVG_MARKER_WIDTH - MARKER_IMAGE_SIZE) / 2
 
+const CALLOUT_IMAGE_SIZE = 50
+const CALLOUT_PADDING = 10
+const CALLOUT_MAX_WIDTH = 300
+
 
 
 const SvgMarker = ({ image }: { image: string }) => {
+    const { marker, background } = useColors()
+
     return (
         <View style={styles.container}>
             <Svg width={SVG_MARKER_WIDTH} height={SVG_MARKER_HEIGHT} viewBox="0 0 100 140">
                 <Path
                     d="M50 0C22.4 0 0 22.4 0 50c0 22.1 17.5 48.6 35.8 78.3 7.2 11.9 21.1 11.9 28.4 0C82.5 98.6 100 72.1 100 50 100 22.4 77.6 0 50 0z"
-                    fill={SVG_MARKER_COLOR}
+                    fill={marker}
                 />
                 <Defs>
                     <ClipPath id="clipCircle">
@@ -31,7 +40,7 @@ const SvgMarker = ({ image }: { image: string }) => {
 
             <Image
                 source={{ uri: image }}
-                style={styles.image}
+                style={[styles.image, { borderColor: background }]}
             />
         </View>
     )
@@ -43,9 +52,17 @@ interface Props {
 }
 
 const CustomCallout: React.FC<Props> = ({ party }) => {
+    const [calloutWidth, setCalloutWidth] = useState(0);
+
+    useEffect(() => {
+        const width = calculateTextWidth(party.venue.name, 16) + CALLOUT_IMAGE_SIZE + CALLOUT_PADDING;
+        setCalloutWidth(Math.min(width, CALLOUT_MAX_WIDTH));
+    }, []);
+
+
     return (
         <Callout tooltip >
-            <BlurView style={styles.calloutContainer} intensity={80} >
+            <BlurView style={[styles.calloutContainer, { width: calloutWidth }]} intensity={90} >
                 <Image
                     source={{ uri: party.venue.logo }}
                     style={styles.calloutLogo}
@@ -74,11 +91,23 @@ const CustomCallout: React.FC<Props> = ({ party }) => {
 
 
 const PartyMarker: React.FC<Props> = ({ party, index }) => {
+    const { setSelectedParty } = useParty()
+    const markerRef = useRef<MapMarker>(null);
+
+    const handleCalloutPress = () => {
+        setSelectedParty(party);
+        markerRef.current?.hideCallout();
+    };
+
+
+
     return (
         <Marker
+            ref={markerRef}
             coordinate={party.venue.location}
             anchor={{ x: 0.5, y: 1 }}
             zIndex={index}
+            onCalloutPress={handleCalloutPress}
         >
             <SvgMarker image={party.venue.logo} />
             <CustomCallout party={party} />
@@ -92,6 +121,7 @@ export default PartyMarker
 const styles = StyleSheet.create({
     //Marker styles
     container: {
+        maxWidth: 250,
         alignItems: "center",
         justifyContent: "center",
         position: "relative",
@@ -103,18 +133,17 @@ const styles = StyleSheet.create({
         width: MARKER_IMAGE_SIZE,
         aspectRatio: 1,
         borderWidth: 2,
-        borderColor: "white",
+        borderColor: "black",
         borderRadius: '50%',
     },
 
     //Callout styles
     calloutContainer: {
-        width: 250,
         padding: 5,
         paddingRight: 15,
         flexDirection: "row",
         alignItems: "center",
-        gap: 5,
+        gap: 10,
         borderRadius: 10,
         borderColor: "#ccc",
         borderWidth: 1,
