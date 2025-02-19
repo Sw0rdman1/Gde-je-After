@@ -2,7 +2,7 @@ import { useLocation } from '@/context/LocationProvider'
 import { useParty } from '@/context/PartyProvider'
 import { StyleSheet } from 'react-native'
 import MapView, { CameraZoomRange } from 'react-native-maps'
-import PartyMarkers from './PartyMarkers'
+import PartyMarker from './PartyMarker'
 
 const CAMERA_ZOOM_RANGE: CameraZoomRange = {
     minCenterCoordinateDistance: 100,
@@ -14,6 +14,13 @@ const Map = () => {
     const { currentLocation } = useLocation()
     const { parties } = useParty()
 
+    const renderMarkers = () => {
+        return parties.map((party, index) => (
+            <PartyMarker key={party.id} party={party} index={index} />
+        ))
+    }
+
+
     return (
         <MapView
             key={parties.length}
@@ -24,7 +31,7 @@ const Map = () => {
             cameraZoomRange={CAMERA_ZOOM_RANGE}
 
         >
-            <PartyMarkers parties={parties} />
+            {renderMarkers()}
         </MapView>
     )
 }
