@@ -2,7 +2,7 @@ import { Callout, MapMarker, Marker } from 'react-native-maps'
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Party from '@/models/Party';
 import { BlurView } from 'expo-blur';
-import Svg, { Path, Defs, ClipPath, Circle } from "react-native-svg";
+import Svg, { Path, Defs, ClipPath, Circle, Mask } from "react-native-svg";
 import { useColors } from '@/hooks/useColors';
 import { useEffect, useRef, useState } from 'react';
 import { calculateTextWidth } from '@/utils/calculate';
@@ -10,10 +10,10 @@ import { useParty } from '@/context/PartyProvider';
 
 const SVG_MARKER_WIDTH = 50
 const SVG_MARKER_HEIGHT = 60
-const MARKER_IMAGE_SIZE = 35
+const MARKER_IMAGE_SIZE = 30
 
-const TOP_OFFSET = (SVG_MARKER_HEIGHT - MARKER_IMAGE_SIZE) / 5
-const LEFT_OFFSET = (SVG_MARKER_WIDTH - MARKER_IMAGE_SIZE) / 2
+const TOP_OFFSET = (SVG_MARKER_HEIGHT - MARKER_IMAGE_SIZE) / 5;
+const LEFT_OFFSET = (SVG_MARKER_WIDTH - MARKER_IMAGE_SIZE) / 2;
 
 const CALLOUT_IMAGE_SIZE = 50
 const CALLOUT_PADDING = 10
@@ -21,29 +21,39 @@ const CALLOUT_MAX_WIDTH = 300
 
 
 
-const SvgMarker = ({ image }: { image: string }) => {
-    const { marker, background } = useColors()
+const SvgMarker = ({ imageUri }: { imageUri: string }) => {
+    const { marker } = useColors()
 
     return (
         <View style={styles.container}>
             <Svg width={SVG_MARKER_WIDTH} height={SVG_MARKER_HEIGHT} viewBox="0 0 100 140">
+                <Defs>
+                    <Mask id="mask">
+                        {/* Full white shape (retains the whole marker) */}
+                        <Path
+                            d="M50 0C22.4 0 0 22.4 0 50c0 22.1 17.5 48.6 35.8 78.3 7.2 11.9 21.1 11.9 28.4 0C82.5 98.6 100 72.1 100 50 100 22.4 77.6 0 50 0z"
+                            fill="white"
+                        />
+                        {/* Cutout inner circle (black removes it) */}
+                        <Circle cx="50" cy="50" r={MARKER_IMAGE_SIZE + 10} fill="black" />
+                    </Mask>
+                </Defs>
+
+                {/* Apply the mask to the red shape */}
                 <Path
                     d="M50 0C22.4 0 0 22.4 0 50c0 22.1 17.5 48.6 35.8 78.3 7.2 11.9 21.1 11.9 28.4 0C82.5 98.6 100 72.1 100 50 100 22.4 77.6 0 50 0z"
                     fill={marker}
+                    mask="url(#mask)"
                 />
-                <Defs>
-                    <ClipPath id="clipCircle">
-                        <Circle cx="25" cy="20" r="20" />
-                    </ClipPath>
-                </Defs>
             </Svg>
 
+            {/* Image inside the circle */}
             <Image
-                source={{ uri: image }}
-                style={[styles.image, { borderColor: background }]}
+                source={{ uri: imageUri }}
+                style={styles.image}
             />
         </View>
-    )
+    );
 }
 
 interface Props {
@@ -109,7 +119,7 @@ const PartyMarker: React.FC<Props> = ({ party, index }) => {
             zIndex={index}
             onCalloutPress={handleCalloutPress}
         >
-            <SvgMarker image={party.venue.logo} />
+            <SvgMarker imageUri={party.venue.logo} />
             <CustomCallout party={party} />
         </Marker>
     )
@@ -132,8 +142,6 @@ const styles = StyleSheet.create({
         left: LEFT_OFFSET,
         width: MARKER_IMAGE_SIZE,
         aspectRatio: 1,
-        borderWidth: 2,
-        borderColor: "black",
         borderRadius: '50%',
     },
 

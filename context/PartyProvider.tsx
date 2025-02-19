@@ -1,4 +1,3 @@
-import PartyLoader from '@/components/Map/PartyLoader';
 import Party from '@/models/Party';
 import { mockParties } from '@/utils/mock';
 import { ProviderProps } from '@/utils/types';
@@ -23,7 +22,7 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
         setTimeout(() => {
             setParties(mockParties)
             setLoading(false)
-        }, 2000)
+        }, 100)
     }
 
     useEffect(() => {
@@ -32,7 +31,6 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
 
     return (
         <PartyContext.Provider value={{ parties, selectedParty, setSelectedParty }}>
-            {loading && <PartyLoader />}
             {children}
         </PartyContext.Provider>
     );
