@@ -1,42 +1,27 @@
+import { useParty } from '@/context/PartyProvider';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
-import { useCallback, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native'
+import { useCallback, } from 'react';
+import PartyCard from './PartyCard';
+import Party from '@/models/Party';
+
 
 const PartiesList = () => {
-    const data = useMemo(
-        () =>
-            Array(50)
-                .fill(0)
-                .map((_, index) => `index-${index}`),
-        []
-    );
-    const renderItem = useCallback(
-        ({ item }: { item: string }) => (
-            <View style={styles.itemContainer}>
-                <Text>{item}</Text>
-            </View>
-        ),
-        []
-    );
+    const { parties } = useParty();
+
+    const renderItem = useCallback(({ item }: { item: Party }) => (
+        <PartyCard party={item} />
+    ), []);
+
+
     return (
         <BottomSheetFlatList
-            data={data}
-            keyExtractor={(i) => i}
+            data={parties}
+            keyExtractor={(party) => party.id}
             renderItem={renderItem}
-            contentContainerStyle={styles.contentContainer}
         />
     )
 }
 
 export default PartiesList
 
-const styles = StyleSheet.create({
-    contentContainer: {
-        backgroundColor: "white",
-    },
-    itemContainer: {
-        padding: 6,
-        margin: 6,
-        backgroundColor: "#eee",
-    },
-})
+
