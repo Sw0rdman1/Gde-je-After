@@ -35,7 +35,12 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
     const openPartyDetails = (party: Party) => {
         setSelectedParty(party)
         bottomSheetRef.current?.snapToIndex(2);
-        mapRef.current?.animateToRegion(party.venue.location);
+        mapRef.current?.animateToRegion({
+            latitude: party.venue.location.latitude - 0.0035,
+            longitude: party.venue.location.longitude,
+            latitudeDelta: party.venue.location.latitudeDelta,
+            longitudeDelta: party.venue.location.longitudeDelta,
+        });
     }
 
     const closePartyDetails = () => {
