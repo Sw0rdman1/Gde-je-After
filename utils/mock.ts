@@ -19,7 +19,7 @@ export const mockVenueFlagAndSparrow: Venue = {
 
 export const mockVenueKST: Venue = {
     id: '2',
-    name: 'KST',
+    name: 'Klub Studenata Tehnike',
     logo: 'https://www.studentskizivot.com/wp-content/uploads/2014/10/KST-LOGO.jpg',
     location: {
         latitude: 44.805509,

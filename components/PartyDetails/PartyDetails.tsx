@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import { useParty } from '@/context/PartyProvider'
+import VenueInformations from './VenueInformations'
 
 const PartyDetails = () => {
     const { selectedParty } = useParty()
 
+    if (!selectedParty) {
+        return null
+    }
+
     return (
         <View style={styles.container}>
-            <Text>
-                {selectedParty?.venue.name}
-            </Text>
+            <VenueInformations venue={selectedParty.venue} />
         </View>
     )
 }
@@ -19,6 +22,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 12,
-        backgroundColor: '#F8F9FA',
+        backgroundColor: 'white',
     },
 })
