@@ -2,6 +2,7 @@ import Party from '@/models/Party'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useColors } from '@/hooks/useColors';
+import { useParty } from '@/context/PartyProvider';
 
 
 interface PartyCardProps {
@@ -10,23 +11,30 @@ interface PartyCardProps {
 
 const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
     const { tint } = useColors();
+    const { openPartyDetails } = useParty();
+
+    const openPartyDetailsHandler = () => {
+        openPartyDetails(party)
+    }
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={openPartyDetailsHandler}>
             <Image
                 source={{ uri: party.venue.logo }}
                 style={styles.venueLogo}
             />
             <View style={styles.textContainer}>
-                <Text style={styles.venueName}>{party.venue.name}</Text>
+                <Text style={styles.venueName} numberOfLines={2} ellipsizeMode='tail'>
+                    {party.venue.name}
+                </Text>
                 <View style={styles.locationContainer}>
                     <FontAwesome6 name="location-dot" size={16} color={tint} />
-                    <Text style={styles.venueAdress}>{party.venue.address}</Text>
+                    <Text style={styles.venueAdress} numberOfLines={2} ellipsizeMode='tail'>
+                        {party.venue.address}
+                    </Text>
                 </View>
             </View>
-
-
-        </TouchableOpacity>
+        </TouchableOpacity >
     )
 }
 
@@ -65,6 +73,7 @@ const styles = StyleSheet.create({
     },
     locationContainer: {
         flexDirection: 'row',
+        alignItems: 'center',
         gap: 4,
     },
     venueAdress: {

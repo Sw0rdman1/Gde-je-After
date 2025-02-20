@@ -1,3 +1,4 @@
+import { AppProvider } from '@/context/AppProvider';
 import { LocationProvider } from '@/context/LocationProvider';
 import { PartyProvider } from '@/context/PartyProvider';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -50,13 +51,15 @@ function RootLayoutNav() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <LocationProvider>
-          <PartyProvider>
-            <Stack>
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-            </Stack>
-          </PartyProvider>
-        </LocationProvider>
+        <AppProvider>
+          <LocationProvider>
+            <PartyProvider>
+              <Stack>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+              </Stack>
+            </PartyProvider>
+          </LocationProvider>
+        </AppProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );

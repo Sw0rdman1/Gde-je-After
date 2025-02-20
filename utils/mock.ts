@@ -11,7 +11,7 @@ export const mockVenueFlagAndSparrow: Venue = {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01
     },
-    address: 'Kraljice Marije 1, Beograd',
+    address: 'Kraljice Marije 1',
     description: 'Flag & Sparrow je jedan od najpoznatijih barova u Beogradu. Nalazi se u samom centru grada, u Kraljice Marije 1. Ovaj bar je poznat po svojoj odličnoj ponudi pića i hrane, kao i po odličnoj atmosferi.',
     phone: '011/123-4567'
 }
@@ -26,7 +26,7 @@ export const mockVenueKST: Venue = {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01
     },
-    address: 'Braće Jugovića 18, Beograd',
+    address: 'Bulevar Kralja Aleksandra 73',
     description: 'KST je jedno od najpoznatijih mesta za žurke u Beogradu. Nalazi se u centru grada, u Braće Jugovića 18. Ovaj klub je poznat po svojim žurkama, kao i po odličnoj atmosferi.',
     phone: '011/765-4321'
 }

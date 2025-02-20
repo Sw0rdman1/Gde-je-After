@@ -97,15 +97,13 @@ const CustomCallout: React.FC<Props> = ({ party }) => {
 
 
 const PartyMarker: React.FC<Props> = ({ party, index }) => {
-    const { setSelectedParty } = useParty()
+    const { openPartyDetails } = useParty()
     const markerRef = useRef<MapMarker>(null);
 
     const handleCalloutPress = () => {
-        setSelectedParty(party);
         markerRef.current?.hideCallout();
+        openPartyDetails(party)
     };
-
-
 
     return (
         <Marker

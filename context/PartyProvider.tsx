@@ -1,12 +1,14 @@
 import Party from '@/models/Party';
 import { mockParties } from '@/utils/mock';
 import { ProviderProps } from '@/utils/types';
-import { createContext, useState, ReactNode, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
+import { useApp } from './AppProvider';
 
 interface PartyContextProps {
     parties: Party[];
     selectedParty: Party | null;
-    setSelectedParty: (party: Party | null) => void;
+    openPartyDetails: (party: Party) => void;
+    closePartyDetails: () => void;
 }
 
 const PartyContext = createContext<PartyContextProps | null>(null);
@@ -16,9 +18,9 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
     const [parties, setParties] = useState<Party[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedParty, setSelectedParty] = useState<Party | null>(null);
+    const { bottomSheetRef, mapRef } = useApp()
 
     const fetchParties = () => {
-        // Fetch parties from API
         setTimeout(() => {
             setParties(mockParties)
             setLoading(false)
@@ -29,8 +31,18 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
         fetchParties()
     }, [])
 
+    const openPartyDetails = (party: Party) => {
+        setSelectedParty(party)
+        bottomSheetRef.current?.snapToIndex(2);
+        mapRef.current?.animateToRegion(party.venue.location);
+    }
+
+    const closePartyDetails = () => {
+        setSelectedParty(null)
+    }
+
     return (
-        <PartyContext.Provider value={{ parties, selectedParty, setSelectedParty }}>
+        <PartyContext.Provider value={{ parties, selectedParty, openPartyDetails, closePartyDetails }}>
             {children}
         </PartyContext.Provider>
     );
