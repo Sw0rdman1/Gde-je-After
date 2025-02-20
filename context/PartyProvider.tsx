@@ -3,6 +3,7 @@ import { mockParties } from '@/utils/mock';
 import { ProviderProps } from '@/utils/types';
 import { createContext, useState, useContext, useEffect } from 'react';
 import { useApp } from './AppProvider';
+import ActionsHeader from '@/components/PartyDetails/ActionsHeader';
 
 interface PartyContextProps {
     parties: Party[];
@@ -43,6 +44,7 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
 
     return (
         <PartyContext.Provider value={{ parties, selectedParty, openPartyDetails, closePartyDetails }}>
+            {selectedParty && <ActionsHeader />}
             {children}
         </PartyContext.Provider>
     );
