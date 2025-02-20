@@ -9,6 +9,8 @@ interface Venue {
 
     location: Region;
     address: string;
+
+    isLiked: boolean;
 }
 
 

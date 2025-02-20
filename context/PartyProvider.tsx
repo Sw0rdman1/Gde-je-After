@@ -44,7 +44,7 @@ export const PartyProvider: React.FC<ProviderProps> = ({ children }) => {
 
     return (
         <PartyContext.Provider value={{ parties, selectedParty, openPartyDetails, closePartyDetails }}>
-            {selectedParty && <ActionsHeader />}
+            {selectedParty && <ActionsHeader selectedParty={selectedParty} closePartyDetails={closePartyDetails} />}
             {children}
         </PartyContext.Provider>
     );

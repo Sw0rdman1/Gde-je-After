@@ -1,25 +1,34 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { useParty } from '@/context/PartyProvider'
 import { Ionicons } from '@expo/vector-icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import Party from '@/models/Party'
 
-const ActionsHeader = () => {
+interface ActionsHeaderProps {
+    selectedParty: Party;
+    closePartyDetails: () => void;
+}
+
+const ActionsHeader: React.FC<ActionsHeaderProps> = ({ selectedParty, closePartyDetails }) => {
     const [isLiked, setIsLiked] = useState(false)
-    const { closePartyDetails } = useParty()
     const { top } = useSafeAreaInsets()
 
     const goBackHandler = () => {
         closePartyDetails()
     }
 
+    useEffect(() => {
+        setIsLiked(selectedParty ? selectedParty?.venue.isLiked : false)
+    }, [selectedParty])
+
     return (
-        <View style={[styles.container, { top: top + 10 }]}>
-            <TouchableOpacity onPress={goBackHandler} style={styles.backButton}>
+        <>
+            <TouchableOpacity onPress={goBackHandler} style={[styles.backButton, { top: top + 10 }]}>
                 <Ionicons style={styles.icon} name="chevron-back" size={24} color="white" />
                 <Text style={styles.text}>Back</Text>
             </TouchableOpacity>
-            <View style={styles.actionContainer}>
+
+            <View style={[styles.actionContainer, { top: top + 10 }]}>
                 <TouchableOpacity
                     style={[styles.actionButton, { backgroundColor: isLiked ? '#E74C3C' : 'white' }]}
                     onPress={() => setIsLiked(!isLiked)}
@@ -38,26 +47,18 @@ const ActionsHeader = () => {
                     />
                 </TouchableOpacity>
             </View>
-
-        </View>
+        </>
     )
 }
 
 export default ActionsHeader
 
 const styles = StyleSheet.create({
-    container: {
-        zIndex: 100,
-        height: 45,
+    backButton: {
         position: 'absolute',
         left: 10,
-        right: 20,
-        flexDirection: 'row',
-        alignContent: 'flex-end',
-        justifyContent: 'space-between',
-    },
-    backButton: {
-        height: '100%',
+        zIndex: 100,
+        height: 45,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'black',
@@ -74,7 +75,10 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     actionContainer: {
-        height: '100%',
+        position: 'absolute',
+        right: 20,
+        height: 45,
+        zIndex: 100,
         flexDirection: 'row',
         alignContent: 'center',
         gap: 15,
