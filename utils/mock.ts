@@ -37,15 +37,21 @@ export const mockParties: Party[] = [
     {
         id: '1',
         date: '2021-09-01',
-        description: 'Ovo je opis prve žurke',
-        name: 'Žurka 1',
+        description: 'Get Low zurka u Flag & Sparrow',
+        name: 'Get Low Idemo Jako',
+        endingTime: '3:00',
+        startingTime: '22:00',
+        image: 'https://www.beogradnocu.com/wp-content/uploads/2017/11/subota-Rush-2.png',
         venue: mockVenueFlagAndSparrow
     },
     {
         id: '2',
-        date: '2021-09-02',
-        description: 'Ovo je opis druge žurke',
-        name: 'Žurka 2',
+        date: '2021-09-01',
+        description: 'Mokra Zurka u KST-u na kojoj će svirati najbolji bendovi',
+        name: 'Mokra Zurka',
+        endingTime: '4:00',
+        startingTime: '21:00',
+        image: 'https://www.kst.org.rs/wp-content/uploads/2021/08/mokra_4_avgust_KAVER.jpg',
         venue: mockVenueKST
-    }
+    },
 ]

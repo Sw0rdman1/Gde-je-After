@@ -1,7 +1,7 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useParty } from '@/context/PartyProvider'
 import VenueInformations from './VenueInformations'
-import DatePicker from '../DatePicker/DatePicker'
+import EventInformations from './EventInformations'
 
 const PartyDetails = () => {
     const { selectedParty } = useParty()
@@ -13,7 +13,7 @@ const PartyDetails = () => {
     return (
         <View style={styles.container}>
             <VenueInformations venue={selectedParty.venue} />
-            <DatePicker />
+            <EventInformations party={selectedParty} />
         </View>
     )
 }
@@ -24,5 +24,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'whitesmoke',
+        gap: 24,
     },
 })

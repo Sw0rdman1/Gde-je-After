@@ -11,7 +11,7 @@ const VenueInformations: React.FC<VenueInformationsProps> = ({ venue }) => {
     const { tint } = useColors();
 
     return (
-        <View>
+        <View style={styles.container}>
             <View style={styles.logoAndNameContainer}>
                 <Image
                     source={{ uri: venue.logo }}
@@ -21,14 +21,13 @@ const VenueInformations: React.FC<VenueInformationsProps> = ({ venue }) => {
             </View>
             <View style={styles.phoneAndAdressContainer}>
                 <View style={styles.iconTextContainer}>
-                    <FontAwesome6 style={styles.iconAdress} name="location-dot" size={20} color={tint} />
-                    <Text style={styles.text}>{venue.address}</Text>
-                </View>
-                <View style={styles.iconTextContainer}>
                     <FontAwesome6 style={styles.icon} name="phone" size={20} color={tint} />
                     <Text style={styles.text}>{venue.phone}</Text>
                 </View>
-
+                <View style={styles.iconTextContainer}>
+                    <FontAwesome6 style={styles.iconAdress} name="location-dot" size={20} color={tint} />
+                    <Text style={styles.text}>{venue.address}</Text>
+                </View>
             </View>
         </View>
     )
@@ -37,17 +36,23 @@ const VenueInformations: React.FC<VenueInformationsProps> = ({ venue }) => {
 export default VenueInformations
 
 const styles = StyleSheet.create({
-    logoAndNameContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 12,
+    container: {
         backgroundColor: 'white',
         padding: 12,
+        gap: 12,
+        borderBottomLeftRadius: 12,
+        borderBottomRightRadius: 12,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
         elevation: 3,
+
+    },
+    logoAndNameContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
     },
     logo: {
         flex: 1,
@@ -55,35 +60,23 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
     name: {
-        flex: 2,
-        fontSize: 32,
+        flex: 3,
+        fontSize: 28,
         fontWeight: 'bold',
     },
 
     phoneAndAdressContainer: {
-        marginTop: 12,
         gap: 12,
-        flexDirection: 'row',
         padding: 6,
     },
     iconTextContainer: {
-        flex: 1,
-        minHeight: 50,
         flexDirection: 'row',
-        backgroundColor: 'white',
-        padding: 6,
+        padding: 3,
         alignItems: 'center',
         gap: 6,
-        borderRadius: 12,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 3,
-        paddingLeft: 12,
     },
     text: {
-        fontSize: 16,
+        fontSize: 18,
         color: 'gray',
         fontWeight: 'bold',
     },
