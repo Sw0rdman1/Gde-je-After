@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
 import { useColors } from "@/hooks/useColors";
 import { Ionicons } from "@expo/vector-icons";
+import { Text, View } from "../Themed";
 
 const DatePicker = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const disableBackArrow = selectedDate <= new Date();
-    const { tint } = useColors();
+    const { tint, text } = useColors();
 
     const changeDate = (days: number) => {
         setSelectedDate((prevDate) => new Date(prevDate.setDate(prevDate.getDate() + days)));
@@ -38,7 +39,7 @@ const DatePicker = () => {
                     {format(selectedDate, "dd.MM.yyyy")}
                 </Text>
                 <TouchableOpacity onPress={() => changeDate(1)} >
-                    <Ionicons name="chevron-forward" size={24} color="black" />
+                    <Ionicons name="chevron-forward" size={24} color={text} />
                 </TouchableOpacity>
             </View>
 

@@ -1,17 +1,18 @@
 import Venue from '@/models/Venue'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useColors } from '@/hooks/useColors';
+import { Text, View } from '../Themed';
 
 interface VenueInformationsProps {
     venue: Venue
 }
 
 const VenueInformations: React.FC<VenueInformationsProps> = ({ venue }) => {
-    const { tint } = useColors();
+    const { tint, text } = useColors();
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { shadowColor: text }]}>
             <View style={styles.logoAndNameContainer}>
                 <Image
                     source={{ uri: venue.logo }}
@@ -37,12 +38,10 @@ export default VenueInformations
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
         padding: 12,
         gap: 12,
         borderBottomLeftRadius: 12,
         borderBottomRightRadius: 12,
-        shadowColor: 'black',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 4,

@@ -1,12 +1,13 @@
 import { Callout, MapMarker, Marker } from 'react-native-maps'
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import Party from '@/models/Party';
 import { BlurView } from 'expo-blur';
 import Svg, { Path, Defs, Circle, Mask } from "react-native-svg";
-import { useColors } from '@/hooks/useColors';
+import { isDarkMode, useColors } from '@/hooks/useColors';
 import { useEffect, useRef, useState } from 'react';
 import { calculateTextWidth } from '@/utils/calculate';
 import { useParty } from '@/context/PartyProvider';
+import { Text } from '../Themed';
 
 const SVG_MARKER_WIDTH = 50
 const SVG_MARKER_HEIGHT = 60
@@ -59,6 +60,8 @@ interface Props {
 
 const CustomCallout: React.FC<Props> = ({ party }) => {
     const [calloutWidth, setCalloutWidth] = useState(0);
+    const { text } = useColors();
+    const darkMode = isDarkMode()
 
     useEffect(() => {
         const width = calculateTextWidth(party.venue.name, 16) + CALLOUT_IMAGE_SIZE + CALLOUT_PADDING;
@@ -68,7 +71,11 @@ const CustomCallout: React.FC<Props> = ({ party }) => {
 
     return (
         <Callout tooltip >
-            <BlurView style={[styles.calloutContainer, { width: calloutWidth }]} intensity={90} >
+            <BlurView
+                style={[styles.calloutContainer, { boxShadow: text, width: calloutWidth }]}
+                intensity={90}
+                tint={darkMode ? 'dark' : 'light'}
+            >
                 <Image
                     source={{ uri: party.venue.logo }}
                     style={styles.calloutLogo}
@@ -147,9 +154,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 10,
         borderRadius: 10,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 4,
