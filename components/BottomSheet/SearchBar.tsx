@@ -1,22 +1,23 @@
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useColors } from '@/hooks/useColors';
+import { Text, View } from '../Themed';
 
 const SearchBar = () => {
-    const { tint } = useColors()
+    const { tint, placeholderText, backgroundDarker, background, text } = useColors()
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: background }]}>
             <Text style={styles.title}>
                 Let's find parties near you
             </Text>
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, { backgroundColor: backgroundDarker, shadowColor: text }]}>
                 <FontAwesome5 name="search" size={22} color={tint} style={styles.icon} />
                 <BottomSheetTextInput
-                    style={styles.input}
+                    style={[styles.input, { color: text }]}
                     placeholder="Search for parties"
-                    placeholderTextColor="gray"
+                    placeholderTextColor={placeholderText}
                     clearButtonMode="while-editing"
                     returnKeyType="search"
                     enablesReturnKeyAutomatically
@@ -44,7 +45,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'whitesmoke',
         borderRadius: 25,
         padding: 10,
-        shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 2,

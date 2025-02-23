@@ -24,10 +24,17 @@ export const transformOrigin = ({ x, y }, ...transformations) => {
 
 interface HandleProps extends BottomSheetHandleProps {
     style?: StyleProp<ViewStyle>;
+    isPartySelected: boolean;
 }
 
-const Handle: React.FC<HandleProps> = ({ style, animatedIndex }) => {
+const Handle: React.FC<HandleProps> = ({ style, animatedIndex, isPartySelected }) => {
     const { background, text } = useColors()
+    const continerTopRadius = isPartySelected ? 0 : 20;
+    const indicatorSnapPoints = isPartySelected ? [0, 1] : [0, 1, 2, 3];
+    const indicatorLeftAngle = isPartySelected ? [toRad(-30), toRad(0),] : [toRad(-30), toRad(-30), 0, toRad(30)];
+    const indicatorRightAngle = isPartySelected ? [toRad(30), toRad(0)] : [toRad(30), toRad(30), 0, toRad(-30)];
+
+
     //#region animations
     const indicatorTransformOriginY = useDerivedValue(() =>
         interpolate(animatedIndex.value, [0, 1, 2], [-1, 0, 1], Extrapolation.CLAMP)
@@ -40,7 +47,7 @@ const Handle: React.FC<HandleProps> = ({ style, animatedIndex }) => {
         const borderTopRadius = interpolate(
             animatedIndex.value,
             [1, 2],
-            [20, 0],
+            [20, continerTopRadius],
             Extrapolation.CLAMP
         );
         return {
@@ -58,8 +65,8 @@ const Handle: React.FC<HandleProps> = ({ style, animatedIndex }) => {
     const leftIndicatorAnimatedStyle = useAnimatedStyle(() => {
         const leftIndicatorRotate = interpolate(
             animatedIndex.value,
-            [0, 1, 2, 3],
-            [toRad(-30), toRad(-30), 0, toRad(30)],
+            indicatorSnapPoints,
+            indicatorLeftAngle,
             Extrapolation.CLAMP
         );
         return {
@@ -84,8 +91,8 @@ const Handle: React.FC<HandleProps> = ({ style, animatedIndex }) => {
     const rightIndicatorAnimatedStyle = useAnimatedStyle(() => {
         const rightIndicatorRotate = interpolate(
             animatedIndex.value,
-            [0, 1, 2, 3],
-            [toRad(30), toRad(30), 0, toRad(-30)],
+            indicatorSnapPoints,
+            indicatorRightAngle,
             Extrapolation.CLAMP
         );
         return {

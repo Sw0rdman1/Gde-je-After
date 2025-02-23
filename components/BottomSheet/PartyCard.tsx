@@ -1,8 +1,9 @@
 import Party from '@/models/Party'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity } from 'react-native'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useColors } from '@/hooks/useColors';
 import { useParty } from '@/context/PartyProvider';
+import { Text, View } from '../Themed';
 
 
 interface PartyCardProps {
@@ -10,7 +11,7 @@ interface PartyCardProps {
 }
 
 const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
-    const { tint } = useColors();
+    const { tint, background, text } = useColors();
     const { openPartyDetails } = useParty();
 
     const openPartyDetailsHandler = () => {
@@ -18,7 +19,11 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
     }
 
     return (
-        <TouchableOpacity style={styles.container} onPress={openPartyDetailsHandler}>
+        <TouchableOpacity
+            style={[styles.container, { backgroundColor: background, shadowColor: text }]}
+            onPress={openPartyDetailsHandler}
+            activeOpacity={0.8}
+        >
             <Image
                 source={{ uri: party.venue.logo }}
                 style={styles.venueLogo}
@@ -34,7 +39,7 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
                     </Text>
                 </View>
             </View>
-        </TouchableOpacity >
+        </TouchableOpacity>
     )
 }
 
@@ -42,13 +47,10 @@ export default PartyCard
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 12,
         paddingRight: 12,
         marginVertical: 8,
         borderRadius: 12,
-        backgroundColor: 'white',
         flexDirection: 'row',
-        shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
@@ -59,8 +61,6 @@ const styles = StyleSheet.create({
         height: 125,
         borderTopLeftRadius: 12,
         borderBottomLeftRadius: 12,
-        borderRightWidth: 1,
-        borderColor: 'lightgray',
     },
     textContainer: {
         padding: 8,

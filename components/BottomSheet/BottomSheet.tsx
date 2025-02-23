@@ -40,7 +40,11 @@ const AppBottomSheet = () => {
             keyboardBehavior="extend"
             backgroundStyle={{ backgroundColor: background }}
             handleComponent={({ animatedIndex, animatedPosition }) =>
-                <Handle animatedIndex={animatedIndex} animatedPosition={animatedPosition} />
+                <Handle
+                    isPartySelected={!!selectedParty}
+                    animatedIndex={animatedIndex}
+                    animatedPosition={animatedPosition}
+                />
             }
         >
             {renderContent()}
