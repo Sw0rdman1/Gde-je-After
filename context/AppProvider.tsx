@@ -5,6 +5,7 @@ import MapView from 'react-native-maps';
 type AppContextType = {
     mapRef: React.RefObject<MapView>;
     bottomSheetRef: React.RefObject<BottomSheet>;
+    filtersSheetRef: React.RefObject<BottomSheet>;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -12,9 +13,10 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const mapRef = useRef<MapView>(null);
     const bottomSheetRef = useRef<BottomSheet>(null);
+    const filtersSheetRef = useRef<BottomSheet>(null);
 
     return (
-        <AppContext.Provider value={{ mapRef, bottomSheetRef }}>
+        <AppContext.Provider value={{ mapRef, bottomSheetRef, filtersSheetRef }}>
             {children}
         </AppContext.Provider>
     );

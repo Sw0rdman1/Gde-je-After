@@ -1,27 +1,40 @@
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useColors } from '@/hooks/useColors';
 import { Text, View } from '../Themed';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useApp } from '@/context/AppProvider';
 
 const SearchBar = () => {
     const { tint, placeholderText, backgroundDarker, background, text } = useColors()
+    const { filtersSheetRef } = useApp()
+
+    const openFiltersBottomSheet = () => {
+        filtersSheetRef.current?.expand();
+    }
+
 
     return (
         <View style={[styles.container, { backgroundColor: background }]}>
             <Text style={styles.title}>
                 Let's find parties near you
             </Text>
-            <View style={[styles.inputContainer, { backgroundColor: backgroundDarker, shadowColor: text }]}>
-                <FontAwesome5 name="search" size={22} color={tint} style={styles.icon} />
-                <BottomSheetTextInput
-                    style={[styles.input, { color: text }]}
-                    placeholder="Search for parties"
-                    placeholderTextColor={placeholderText}
-                    clearButtonMode="while-editing"
-                    returnKeyType="search"
-                    enablesReturnKeyAutomatically
-                />
+            <View style={styles.actionContainer}>
+                <View style={[styles.inputContainer, { backgroundColor: backgroundDarker, shadowColor: text }]}>
+                    <FontAwesome5 name="search" size={22} color={tint} style={styles.icon} />
+                    <BottomSheetTextInput
+                        style={[styles.input, { color: text }]}
+                        placeholder="Search for parties"
+                        placeholderTextColor={placeholderText}
+                        clearButtonMode="while-editing"
+                        returnKeyType="search"
+                        enablesReturnKeyAutomatically
+                    />
+                </View>
+                <TouchableOpacity onPress={openFiltersBottomSheet} style={[styles.filterButton, { backgroundColor: tint }]}>
+                    <Ionicons name="filter-sharp" size={24} color='white' />
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -39,7 +52,20 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
     },
+    actionContainer: {
+        flexDirection: 'row',
+        gap: 10,
+    },
+    filterButton: {
+        height: 40,
+        width: 40,
+        borderRadius: 25,
+        backgroundColor: 'blue',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     inputContainer: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'whitesmoke',
