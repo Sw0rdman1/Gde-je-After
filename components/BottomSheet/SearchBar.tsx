@@ -8,9 +8,10 @@ import { useApp } from '@/context/AppProvider';
 
 const SearchBar = () => {
     const { tint, placeholderText, backgroundDarker, background, text } = useColors()
-    const { filtersSheetRef } = useApp()
+    const { filtersSheetRef, bottomSheetRef } = useApp()
 
     const openFiltersBottomSheet = () => {
+        bottomSheetRef.current?.snapToIndex(1);
         filtersSheetRef.current?.expand();
     }
 
