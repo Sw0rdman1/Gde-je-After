@@ -20,7 +20,7 @@ const PartiesList = () => {
             data={parties}
             keyExtractor={(party) => party.id}
             renderItem={renderItem}
-            style={{ backgroundColor: backgroundDarker, paddingVertical: 8 }}
+            style={{ backgroundColor: backgroundDarker, padding: 8 }}
         />
     )
 }
